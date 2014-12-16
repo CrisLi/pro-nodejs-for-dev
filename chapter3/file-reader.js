@@ -1,26 +1,29 @@
 var fs = require('fs');
 var filename = "foo.txt";
 
-fs.exists(filename, function(exists) {
-
-  if (exists) {
-
-    fs.stat(filename, function(err, stats) {
-
-      if (err) {
-        throw err;
-      }
-
-      if (stats.isFile()) {
-        fs.readFile(filename, "utf8", function(err, data) {
-          if (err) {
-            throw err;
-          }
-          console.log(data);
-        });
-      }
-
-    });
-
+function cbReadFile(error, data) {
+  if (error) {
+    throw error;
   }
-});
+
+  console.log(data);
+}
+
+function cbStat(error, stats) {
+  if (error) {
+    throw error;
+  }
+
+  if (stats.isFile()) {
+    fs.readFile(fileName, "utf8", cbReadFile);
+  }
+
+}
+
+function cbExists(exists) {
+  if (exists) {
+    fs.stat(filename, cbStat);
+  }
+}
+
+fs.exists(filename, cbExists);
