@@ -1,10 +1,26 @@
 var fs = require('fs');
+var filename = "foo.txt";
 
-fs.readFile("foo.txt", "utf8", function(err, data) {
-  if (err) {
-    throw err;
+fs.exists(filename, function(exists) {
+
+  if (exists) {
+
+    fs.stat(filename, function(err, stats) {
+
+      if (err) {
+        throw err;
+      }
+
+      if (stats.isFile()) {
+        fs.readFile(filename, "utf8", function(err, data) {
+          if (err) {
+            throw err;
+          }
+          console.log(data);
+        });
+      }
+
+    });
+
   }
-  console.log(data);
 });
-
-console.log("Reading file...");
