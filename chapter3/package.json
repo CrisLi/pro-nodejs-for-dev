@@ -1,0 +1,7 @@
+{
+  "name": "chapter3",
+  "description": "Pro Node.js for Developers - Chapter3",
+  "dependencies": {
+    "async": "^0.9.0"
+  }
+}
